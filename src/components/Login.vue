@@ -5,7 +5,7 @@
       <v-col cols="12" md="8" sm="12">
         <!-- <v-card v-if="error">
           <alert @dismissed="onDismissed" :text="error.message" elevation="2"></alert>
-        </v-card> -->
+        </v-card>-->
         <h2>Login up for Meetup</h2>
         <v-form @submit.prevent="onLogin" ref="form" v-model="valid" lazy-validation class="mt-4">
           <!-- <v-text-field v-model="name" :counter="10" :rules="nameRules" label="Name" required></v-text-field> -->
@@ -62,7 +62,6 @@ export default {
       (v) => (v && v.length >= 8) || "Password must be less than 8 characters",
     ],
   }),
-  
 
   methods: {
     validate() {

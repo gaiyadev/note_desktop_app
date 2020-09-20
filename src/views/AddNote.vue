@@ -9,7 +9,7 @@
 import AddNote from "@/components/AddNote.vue";
 
 export default {
-//   name: "AddNote",
+  //   name: "AddNote",
   components: {
     AddNote,
   },

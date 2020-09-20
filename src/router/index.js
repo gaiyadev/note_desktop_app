@@ -4,6 +4,7 @@ import Register from '../views/Register'
 import Login from "../views/Login"
 import Home from "../views/Home"
 import AddNote from "../views/AddNote"
+import AllNote from "../views/AllNote"
 
 Vue.use(VueRouter)
 
@@ -27,6 +28,11 @@ const routes = [
     path: '/login',
     name: 'Login',
     component: Login
+  },
+  {
+    path: '/allNote',
+    name: 'AllNote',
+    component: AllNote
   }
 ]
 

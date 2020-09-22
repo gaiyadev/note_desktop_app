@@ -11,18 +11,30 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="item in notes" :key="item.id">
-          <td class="primary--text">{{ item.id }}</td>
+        <tr v-for="item in allNotes" :key="item._id">
+          <td class="primary--text">{{ item._id }}</td>
           <td>{{ item.title }}</td>
           <td>{{ item.body }}</td>
-          <td>{{ item.date }}</td>
           <td>
-            <v-btn shaped type="submit" color="error" class="mr-4">Delete</v-btn>
-            <v-btn shaped type="submit" color="primary" class="mr-4">Edit</v-btn>
+            <v-btn
+              shaped
+              type="submit"
+              color="error"
+              class="mr-4"
+              @click="deleteNotes(item._id)"
+            >Delete</v-btn>
+            <v-btn
+              shaped
+              type="submit"
+              color="primary"
+              class="mr-4"
+              @click="EditNotes(item._id)"
+            >Edit</v-btn>
           </td>
         </tr>
       </tbody>
-      <router-link to="/addNote">
+      <!-- {{allNotes}} -->
+      <router-link to="/add">
         <p>Add notes</p>
       </router-link>
     </template>
@@ -30,6 +42,13 @@
 </template>
 
 <script>
+const url = "https://note-expressjs-api.herokuapp.com";
+const proxyurl = "https://cors-anywhere.herokuapp.com/";
+//yarn electron:serve
+
+axios.defaults.crossDomain = true;
+
+import axios from "axios";
 export default {
   data() {
     return {
@@ -42,6 +61,34 @@ export default {
         },
       ],
     };
+  },
+  computed: {
+    allNotes() {
+      return this.$store.getters.notes;
+    },
+  },
+  methods: {
+    fetchNotes() {
+      this.$store.dispatch("fetchNotes");
+    },
+    EditNotes(id) {
+      this.$router.push("/edit/" + id);
+    },
+    deleteNotes(id) {
+      axios
+        .delete(`${proxyurl}${url}/api/note/${id}`)
+        .then((notes) => {
+          const alert = notes["data"]["message"];
+          this.$toast(alert);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+  },
+  created() {
+    console.log("this is allnote");
+    this.fetchNotes();
   },
 };
 </script>

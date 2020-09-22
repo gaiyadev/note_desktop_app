@@ -101,12 +101,12 @@ export default new Vuex.Store({
         title: payload.title,
         body: payload.body,
       }).then(note => {
-        const newNotes = {
-          id: note.data["note"]['_id'],
-          title: note.data["note"]['title'],
-          body: note.data["note"]['body'],
-        };
-        commit("setNotes", newNotes);
+        // const newNotes = {
+        //   id: note.data["note"]['_id'],
+        //   title: note.data["note"]['title'],
+        //   body: note.data["note"]['body'],
+        // };
+        // commit("setNotes", newNotes);
         const mess = note.data["message"];
         commit('setMessage', mess);
         console.log(note);
@@ -114,6 +114,15 @@ export default new Vuex.Store({
         console.log(err);
         commit('setLoading', false);
         commit('setError', false);
+      })
+    },
+    fetchNotes({ commit }) {
+      commit('setLoading', true);
+      commit('clearError');
+      axios.get(`${proxyurl}${url}/api/note`).then(notes => {
+        commit('setNotes', notes['data']['notes']);
+      }).catch(err => {
+        console.log(err);
       })
     }
   },
@@ -131,7 +140,7 @@ export default new Vuex.Store({
     },
     notes(state) {
       return state.notes;
-    }
+    },
   },
 
 })

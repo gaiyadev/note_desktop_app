@@ -44,13 +44,12 @@ export default new Vuex.Store({
       }).then(user => {
         commit('setLoading', false);
         const newUser = {
-          id: user.data['_id'],
-          email: user.data['email'],
+          id: user.data["user"]['_id'],
+          email: user.data["user"]['email'],
         };
         commit("setUser", newUser);
         const mess = user.data["message"];
         commit('setMessage', mess);
-        // console.log(user.data["message"]);
       }).catch(err => {
         commit('setLoading', false);
         commit('setError', false);
@@ -64,5 +63,8 @@ export default new Vuex.Store({
     message(state) {
       return state.message;
     },
+    user(state) {
+      return state.user;
+    }
   }
 })

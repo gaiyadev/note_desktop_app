@@ -5,7 +5,7 @@
       <v-col cols="12" md="8" sm="12">
         <v-btn shaped type="submit" color="error" class="mr-4" @click="logout">logout</v-btn>
         <h2>Add Note</h2>
-        <v-form @submit.prevent="onSignup" ref="form" class="mt-4" v-model="valid" lazy-validation>
+        <v-form @submit.prevent="onAdd" ref="form" class="mt-4" v-model="valid" lazy-validation>
           <v-text-field
             v-model="title"
             outlined
@@ -67,7 +67,7 @@ export default {
     validate() {
       this.$refs.form.validate();
     },
-    onSignup() {
+    onAdd() {
       //code
     },
     logout() {

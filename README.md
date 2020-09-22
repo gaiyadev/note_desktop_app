@@ -6,7 +6,7 @@ A desktop application built with electronjs, consuming a nodejs rest api hosted 
 +   Register
 +   Login
 +   Add Note
-+   Delelte Notes
++   Delete Notes
 +   Update Notes
 +   View Notes
 +   JWT Auth

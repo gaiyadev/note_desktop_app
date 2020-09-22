@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 
 const url = 'https://note-expressjs-api.herokuapp.com';
 const proxyurl = "https://cors-anywhere.herokuapp.com/";
+//yarn electron:serve
 
 axios.defaults.crossDomain = true;
 
@@ -17,6 +18,7 @@ export default new Vuex.Store({
     error: null,
     message: "",
     token: null,
+    notes: null,
   },
   mutations: {
     setUser(state, payload) {
@@ -40,12 +42,15 @@ export default new Vuex.Store({
     clearToken(state) {
       state.token = null;
     },
+    setNotes(state, payload) {
+      state.notes = payload;
+    }
   },
   actions: {
     userRegister({ commit }, payload) {
       commit('setLoading', true);
       commit('clearError');
-      return axios.post(proxyurl + url + '/api/users/register', {
+      return axios.post(`${proxyurl}${url}/api/users/register`, {
         email: payload.email,
         password: payload.password,
       }).then(user => {
@@ -66,7 +71,7 @@ export default new Vuex.Store({
     userLogin({ commit }, payload) {
       commit('setLoading', true);
       commit('clearError');
-      return axios.post(proxyurl + url + '/api/users/login', {
+      return axios.post(`${proxyurl}${url}/api/users/login`, {
         email: payload.email,
         password: payload.password,
       }).then(user => {
@@ -89,6 +94,28 @@ export default new Vuex.Store({
       commit("setUser", null);
       commit('clearToken');
     },
+    addNote({ commit }, payload) {
+      commit('setLoading', true);
+      commit('clearError');
+      axios.post(`${proxyurl}${url}/api/note/add`, {
+        title: payload.title,
+        body: payload.body,
+      }).then(note => {
+        const newNotes = {
+          id: note.data["note"]['_id'],
+          title: note.data["note"]['title'],
+          body: note.data["note"]['body'],
+        };
+        commit("setNotes", newNotes);
+        const mess = note.data["message"];
+        commit('setMessage', mess);
+        console.log(note);
+      }).catch(err => {
+        console.log(err);
+        commit('setLoading', false);
+        commit('setError', false);
+      })
+    }
   },
   modules: {
   },
@@ -101,6 +128,10 @@ export default new Vuex.Store({
     },
     token(state) {
       return state.token;
+    },
+    notes(state) {
+      return state.notes;
     }
-  }
+  },
+
 })

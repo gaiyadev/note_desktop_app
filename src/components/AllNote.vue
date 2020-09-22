@@ -22,6 +22,9 @@
           </td>
         </tr>
       </tbody>
+      <router-link to="/addNote">
+        <p>Add notes</p>
+      </router-link>
     </template>
   </v-simple-table>
 </template>

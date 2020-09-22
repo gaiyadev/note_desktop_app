@@ -4,7 +4,9 @@
       <v-col cols="2"></v-col>
       <v-col cols="12" md="8" sm="12">
         <v-btn shaped type="submit" color="error" class="mr-4" @click="logout">logout</v-btn>
+
         <h2>Add Note</h2>
+        {{message}}
         <v-form @submit.prevent="onAdd" ref="form" class="mt-4" v-model="valid" lazy-validation>
           <v-text-field
             v-model="title"
@@ -37,6 +39,9 @@
             @click="validate"
           >Register</v-btn>
         </v-form>
+        <router-link to="/allNote">
+          <p>View all notes</p>
+        </router-link>
       </v-col>
       <v-col cols="2"></v-col>
     </v-row>
@@ -62,13 +67,26 @@ export default {
       ],
     };
   },
-
+  computed: {
+    message() {
+      return this.$store.getters.message;
+    },
+    user() {
+      return this.$store.getters.user;
+    },
+    token() {
+      return this.$store.getters.token;
+    },
+  },
   methods: {
     validate() {
       this.$refs.form.validate();
     },
     onAdd() {
-      //code
+      this.$store.dispatch("addNote", {
+        title: this.title,
+        body: this.body,
+      });
     },
     logout() {
       this.$store.dispatch("logout");

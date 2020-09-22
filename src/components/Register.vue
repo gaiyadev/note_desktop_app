@@ -4,6 +4,7 @@
       <v-col cols="2"></v-col>
       <v-col cols="12" md="8" sm="12">
         <h2>Create an Account</h2>
+        {{message}}
         <v-form @submit.prevent="onSignup" ref="form" class="mt-4" v-model="valid" lazy-validation>
           <v-text-field
             v-model="email"
@@ -93,13 +94,20 @@ export default {
       ],
     };
   },
-
+  computed: {
+    message() {
+      return this.$store.getters.message;
+    },
+  },
   methods: {
     validate() {
       this.$refs.form.validate();
     },
     onSignup() {
-      //code
+      this.$store.dispatch("userRegister", {
+        email: this.email,
+        password: this.password,
+      });
     },
   },
 };

@@ -26,8 +26,6 @@
             label="Body"
             required
           ></v-text-field>
-
-          <p></p>
           <v-btn
             shaped
             block
@@ -37,8 +35,9 @@
             color="primary"
             class="mr-4"
             @click="validate"
-          >Add</v-btn>
+          >Update</v-btn>
         </v-form>
+        {{ $route.params.id }}
         <router-link to="/allNote">
           <p>View all notes</p>
         </router-link>
@@ -77,6 +76,9 @@ export default {
     token() {
       return this.$store.getters.token;
     },
+    Note() {
+      return this.$store.getters.loadedNotes;
+    },
   },
   methods: {
     validate() {
@@ -96,41 +98,3 @@ export default {
 };
 </script>
 
-<style scoped>
-.custom-loader {
-  /* animation: loader 1s infinite; */
-  display: flex;
-}
-@-moz-keyframes loader {
-  from {
-    transform: rotate(0);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-@-webkit-keyframes loader {
-  from {
-    transform: rotate(0);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-@-o-keyframes loader {
-  from {
-    transform: rotate(0);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-@keyframes loader {
-  from {
-    transform: rotate(0);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-</style>

@@ -141,6 +141,13 @@ export default new Vuex.Store({
     notes(state) {
       return state.notes;
     },
+    loadedNotes(state) {
+      return noteId => {
+        return state.notes.find(note => {
+          return note.id === noteId;
+        });
+      };
+    },
   },
 
 })

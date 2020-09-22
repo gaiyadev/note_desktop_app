@@ -1,6 +1,7 @@
 <template>
   <v-simple-table>
     <template v-slot:default>
+      <v-btn shaped type="submit" color="error" class="mr-4" @click="logout">logout</v-btn>
       <thead>
         <tr>
           <th class="text-left primary--text">S/N</th>
@@ -73,11 +74,13 @@ export default {
     },
     EditNotes(id) {
       this.$router.push("/edit/" + id);
+      console.log(id);
     },
     deleteNotes(id) {
       axios
         .delete(`${proxyurl}${url}/api/note/${id}`)
         .then((notes) => {
+          this.$emit("afterDeleted");
           const alert = notes["data"]["message"];
           this.$toast(alert);
         })
@@ -85,10 +88,17 @@ export default {
           console.log(err);
         });
     },
+    logout() {
+      this.$store.dispatch("logout");
+      this.$router.push("/");
+    },
   },
   created() {
     console.log("this is allnote");
     this.fetchNotes();
+    this.$on("afterDeleted", () => {
+      this.fetchNotes();
+    });
   },
 };
 </script>

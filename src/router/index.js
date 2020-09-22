@@ -5,6 +5,7 @@ import Login from "../views/Login"
 import Home from "../views/Home"
 import AddNote from "../views/AddNote"
 import AllNote from "../views/AllNote"
+import EditNote from '../views/Edit'
 
 Vue.use(VueRouter)
 
@@ -33,6 +34,11 @@ const routes = [
     path: '/allNote',
     name: 'AllNote',
     component: AllNote
+  },
+  {
+    path: '/edit',
+    name: 'EditNote',
+    component: EditNote
   }
 ]
 

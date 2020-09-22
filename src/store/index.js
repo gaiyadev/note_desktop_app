@@ -16,6 +16,7 @@ export default new Vuex.Store({
     loading: false,
     error: null,
     message: "",
+    token: null,
   },
   mutations: {
     setUser(state, payload) {
@@ -32,7 +33,13 @@ export default new Vuex.Store({
     },
     setMessage(state, payload) {
       state.message = payload;
-    }
+    },
+    setToken(state, payload) {
+      state.token = payload;
+    },
+    clearToken(state) {
+      state.token = null;
+    },
   },
   actions: {
     userRegister({ commit }, payload) {
@@ -55,7 +62,33 @@ export default new Vuex.Store({
         commit('setError', false);
         console.log(err.error);
       });
-    }
+    },
+    userLogin({ commit }, payload) {
+      commit('setLoading', true);
+      commit('clearError');
+      return axios.post(proxyurl + url + '/api/users/login', {
+        email: payload.email,
+        password: payload.password,
+      }).then(user => {
+        commit('setLoading', false);
+        const newUser = {
+          id: user.data["user"]['_id'],
+          email: user.data["user"]['email'],
+        };
+        commit("setUser", newUser);
+        const mess = user.data["message"];
+        commit('setMessage', mess);
+        commit('setToken', user.data['token']);
+      }).catch(err => {
+        commit('setLoading', false);
+        commit('setError', false);
+        console.log(err.error);
+      });
+    },
+    logout({ commit }) {
+      commit("setUser", null);
+      commit('clearToken');
+    },
   },
   modules: {
   },
@@ -65,6 +98,9 @@ export default new Vuex.Store({
     },
     user(state) {
       return state.user;
+    },
+    token(state) {
+      return state.token;
     }
   }
 })

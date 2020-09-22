@@ -3,6 +3,7 @@
     <v-row class="text-center">
       <v-col cols="2"></v-col>
       <v-col cols="12" md="8" sm="12">
+        <v-btn shaped type="submit" color="error" class="mr-4" @click="logout">logout</v-btn>
         <h2>Add Note</h2>
         <v-form @submit.prevent="onSignup" ref="form" class="mt-4" v-model="valid" lazy-validation>
           <v-text-field
@@ -68,6 +69,10 @@ export default {
     },
     onSignup() {
       //code
+    },
+    logout() {
+      this.$store.dispatch("logout");
+      this.$router.push("/");
     },
   },
 };

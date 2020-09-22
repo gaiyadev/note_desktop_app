@@ -7,6 +7,8 @@
           <alert @dismissed="onDismissed" :text="error.message" elevation="2"></alert>
         </v-card>-->
         <h2>Login up for Meetup</h2>
+        {{message}}
+        {{token}}
         <v-form @submit.prevent="onLogin" ref="form" v-model="valid" lazy-validation class="mt-4">
           <!-- <v-text-field v-model="name" :counter="10" :rules="nameRules" label="Name" required></v-text-field> -->
 
@@ -62,13 +64,38 @@ export default {
       (v) => (v && v.length >= 8) || "Password must be less than 8 characters",
     ],
   }),
-
+  computed: {
+    message() {
+      return this.$store.getters.message;
+    },
+    user() {
+      return this.$store.getters.user;
+    },
+    token() {
+      return this.$store.getters.token;
+    },
+  },
+  watch: {
+    user(value) {
+      if (value !== null && value !== undefined) {
+        this.$router.push("/add");
+      }
+    },
+    token(value) {
+      if (value !== null && value !== undefined) {
+        this.$router.push("/");
+      }
+    },
+  },
   methods: {
     validate() {
       this.$refs.form.validate();
     },
     onLogin() {
-      //code
+      this.$store.dispatch("userLogin", {
+        email: this.email,
+        password: this.password,
+      });
     },
   },
 };

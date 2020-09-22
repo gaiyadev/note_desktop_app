@@ -5,7 +5,6 @@
       <v-col cols="12" md="8" sm="12">
         <h2>Create an Account</h2>
         {{message}}
-        {{user}}
         <v-form @submit.prevent="onSignup" ref="form" class="mt-4" v-model="valid" lazy-validation>
           <v-text-field
             v-model="email"

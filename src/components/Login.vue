@@ -7,8 +7,7 @@
           <alert @dismissed="onDismissed" :text="error.message" elevation="2"></alert>
         </v-card>-->
         <h2>Login up for Meetup</h2>
-        {{message}}
-        {{token}}
+        {{message }}
         <v-form @submit.prevent="onLogin" ref="form" v-model="valid" lazy-validation class="mt-4">
           <!-- <v-text-field v-model="name" :counter="10" :rules="nameRules" label="Name" required></v-text-field> -->
 

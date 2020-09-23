@@ -91,10 +91,18 @@ export default {
       this.$refs.form.validate();
     },
     onAdd() {
-      this.$store.dispatch("addNote", {
-        title: this.title,
-        body: this.body,
-      });
+      axios
+        .put(`${proxyurl}${url}/api/note/${this.id}`, {
+          title: this.title,
+          body: this.body,
+        })
+        .then((note) => {
+          const alert = note["data"]["message"];
+          this.$toast(alert);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
     logout() {
       this.$store.dispatch("logout");
@@ -108,7 +116,6 @@ export default {
           let getBody = note["data"]["item"]["body"];
           this.title = getTitle;
           this.body = getBody;
-          console.log(note);
         })
         .catch((err) => {
           console.log(err);

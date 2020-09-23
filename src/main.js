@@ -10,7 +10,7 @@ import "vue-toastification/dist/index.css";
 
 const options = {
   // You can set your default options here
-  timeout: 3500,
+  timeout: 1000,
   draggable: true,
   closeOnClick: false
 };

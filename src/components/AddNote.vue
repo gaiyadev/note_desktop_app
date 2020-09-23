@@ -6,7 +6,6 @@
         <v-btn shaped type="submit" color="error" class="mr-4" @click="logout">logout</v-btn>
 
         <h2>Add Note</h2>
-        {{message}}
         <v-form @submit.prevent="onAdd" ref="form" class="mt-4" v-model="valid" lazy-validation>
           <v-text-field
             v-model="title"
@@ -96,41 +95,3 @@ export default {
 };
 </script>
 
-<style scoped>
-.custom-loader {
-  /* animation: loader 1s infinite; */
-  display: flex;
-}
-@-moz-keyframes loader {
-  from {
-    transform: rotate(0);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-@-webkit-keyframes loader {
-  from {
-    transform: rotate(0);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-@-o-keyframes loader {
-  from {
-    transform: rotate(0);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-@keyframes loader {
-  from {
-    transform: rotate(0);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-</style>

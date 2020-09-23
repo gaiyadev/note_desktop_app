@@ -120,7 +120,9 @@ export default new Vuex.Store({
       commit('setLoading', true);
       commit('clearError');
       axios.get(`${proxyurl}${url}/api/note`).then(notes => {
-        commit('setNotes', notes['data']['notes']);
+        const loadedNotes = notes['data']['notes'];
+
+        commit('setNotes', loadedNotes);
       }).catch(err => {
         console.log(err);
       })

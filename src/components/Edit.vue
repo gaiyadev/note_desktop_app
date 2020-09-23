@@ -4,8 +4,7 @@
       <v-col cols="2"></v-col>
       <v-col cols="12" md="8" sm="12">
         <v-btn shaped type="submit" color="error" class="mr-4" @click="logout">logout</v-btn>
-
-        <h2>Add Note</h2>
+        <h2>Edit Note</h2>
         {{message}}
         <v-form @submit.prevent="onAdd" ref="form" class="mt-4" v-model="valid" lazy-validation>
           <v-text-field
@@ -37,7 +36,6 @@
             @click="validate"
           >Update</v-btn>
         </v-form>
-        {{ $route.params.id }}
         <router-link to="/allNote">
           <p>View all notes</p>
         </router-link>
@@ -48,13 +46,21 @@
 </template>
 
 <script>
+import axios from "axios";
+const url = "https://note-expressjs-api.herokuapp.com";
+const proxyurl = "https://cors-anywhere.herokuapp.com/";
+//yarn electron:serve
+
+axios.defaults.crossDomain = true;
 export default {
   data() {
     return {
+      singleNote: [],
       valid: true,
       show1: false,
       show2: false,
       title: "",
+      id: this.$route.params.id,
       titleRules: [
         (v) => !!v || "Title is required",
         // (v) => /.+@.+\..+/.test(v) || "Title must be valid",
@@ -76,8 +82,8 @@ export default {
     token() {
       return this.$store.getters.token;
     },
-    Note() {
-      return this.$store.getters.loadedNotes;
+    note() {
+      return this.$store.getters.loadedNotes(this.id);
     },
   },
   methods: {
@@ -94,6 +100,23 @@ export default {
       this.$store.dispatch("logout");
       this.$router.push("/");
     },
+    getSingleNote() {
+      axios
+        .get(`${proxyurl}${url}/api/note/${this.id}`)
+        .then((note) => {
+          let getTitle = note["data"]["item"]["title"];
+          let getBody = note["data"]["item"]["body"];
+          this.title = getTitle;
+          this.body = getBody;
+          console.log(note);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+  },
+  created() {
+    this.getSingleNote();
   },
 };
 </script>

@@ -94,7 +94,6 @@ export default {
     },
   },
   created() {
-    console.log("this is allnote");
     this.fetchNotes();
     this.$on("afterDeleted", () => {
       this.fetchNotes();

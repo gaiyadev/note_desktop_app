@@ -36,7 +36,7 @@ const routes = [
     component: AllNote
   },
   {
-    path: '/edit',
+    path: '/edit/:id',
     name: 'EditNote',
     component: EditNote
   }

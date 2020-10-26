@@ -14,4 +14,4 @@ A desktop application built with electronjs, consuming a nodejs rest api hosted 
 
 
 ## Contribution
-Wanna contributing? feel freen to clone the repo and  add cool things and send a PR
+Wanna contributing? feel free to clone the repo and  add cool things and send a PR
